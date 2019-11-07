@@ -5,7 +5,7 @@
 ### Install
 
 ```shell
-$ npm i @easy-es --save
+$ npm i easy-es --save
 ```
 
 ### Usage
@@ -40,16 +40,16 @@ let dateHistogramAggs = client.utils.createDateHistogramAggs('issue_time_date', 
 
 ```js
 let body = client.utils.createBody(should, filter);
-let body = client.utils.createBody(should, filter, dateHistogramAggs);
+ body = client.utils.createBody(should, filter, dateHistogramAggs);
 ```
 
 ### 执行查询的样例
 
 ```js
   let result = await client.search('magazine_article', body, 2, 0);
-  let result = await client.get('magazine_article', '34');
-  let result = await client.update('magazine_article', '25',{download_times:"0"});
-  let result = await client.increase('magazine_article', '23','download_times',10);
-  let result = await client.count('magazine_article',body);
+  result = await client.get('magazine_article', '34');
+  result = await client.update('magazine_article', '25',{download_times:"0"});
+  result = await client.increase('magazine_article', '23','download_times',10);
+  result = await client.count('magazine_article',body);
 ```
 

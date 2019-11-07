@@ -1,6 +1,6 @@
 {
   "name": "easy-es",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "engines": {
     "node": ">=8.0.0"
   },
@@ -17,10 +17,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "ssh://git@github.com:Winterkeepgoing/easy-es.git"
+    "url": "git+ssh://git@github.com/Winterkeepgoing/easy-es.git"
   },
   "keywords": [
     "elasticsearch"
   ],
-  "license": "ISC"
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Winterkeepgoing/easy-es/issues"
+  },
+  "homepage": "https://github.com/Winterkeepgoing/easy-es#readme",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
 }
