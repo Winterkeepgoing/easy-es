@@ -1,0 +1,9 @@
+.idea
+/node_modules
+.DS_store
+*.log
+Untitled
+.vscode
+/logs
+coverage
+.nyc_output

@@ -1,0 +1,29 @@
+{
+  "name": "@dtwave/easy-es",
+  "version": "1.0.13",
+  "scripts": {
+    "start": "node ./app"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "description": "对elasticsearch的进一步封装，并且提供了查询body的构建方法",
+  "main": "index.js",
+  "dependencies": {
+    "elasticsearch": "15.0.0"
+  },
+  "devDependencies": {},
+  "author": "winter",
+  "directories": {
+    "example": "examples",
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@gitlab.dtwave-inc.com:30001/npm/easy-es.git"
+  },
+  "keywords": [
+    "elasticsearch"
+  ],
+  "license": "ISC"
+}
