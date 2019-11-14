@@ -9,7 +9,7 @@ $ npm i @easy-es --save
 ```
 
 ### Usage
-[API文档请参考](https://github.com/Winterkeepgoing/easy-es/doc/index.html) 
+[API文档请参考](https://easy-es.ibrightfactory.com/) 
 
 实例化
 ```js
