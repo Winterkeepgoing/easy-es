@@ -1,55 +1,65 @@
-### easy-es
 
-1. 支持elasticsearch的版本为5.3-6.8
+基于Elasticsearch进行二次封装，大幅简化查询条件的构建，以及发送相应请求
 
 ### Install
-
 ```shell
-$ npm i @easy-es --save
+$ npm install easy-es --save
 ```
 
 ### Usage
 [API文档请参考](https://easy-es.ibrightfactory.com/) 
 
-实例化
+### Supported Elasticsearch Versions
+6.x, 6.2, 6.1, 6.0, 5.6, 5.5, 5.4, 5.3, 5.2, 5.1, 5.0
+
+### Examples
 ```js
+// 6.x
+// 其他版本样例请参考examples路径下的相应文件
 const easyES = require('easy-es');
-const client = new easyES('user:password@192.168.91.1:9200', '_defualt','index');
+const client = new easyES('user:password@192.168.1.1:9200', '6.x');
+
+// -------一个简单的查询-------
+const should = [], filter = [];
+// 无论什么版本，utils下的方法都是一致的
+client.utils.addTerm(filter, 'gender', 'male');
+client.utils.addRange(filter, 'reward', 300000000, 1500000000);
+client.utils.addMatch(should, 'name', 'Monkey');
+
+const body = client.utils.createBody(should, filter);
+
+const source = ['name'];
+// 获取前10个检索结果
+const result = await client.search('type', body, 10, 0, source ,'index');
+
+// -------一个简单的聚合-------
+const agg = client.utils.createTermsAggs('gender');
+const body = client.utils.createBody(should, filter, agg);
+const result = await client.search('type', body, 0, 0, null, 'index');
+
+// -------带timeZone的时间聚合-------
+const dateHistogramAggs = client.utils.createDateHistogramAggs('birthday', 'year', 'yyyy', null, null, '+08:00');
+const body = client.utils.createBody(should, filter, dateHistogramAggs);
+
+const result = await client.search('type', body, 0, 0, null, 'index');
+
 ```
 
-### 构建子查询条件
-目前支持的utils方法如下
+### Something you need to know
 
-```js
-let should = [], filter = [], must = [], mustNot = [], sort = [];
-
-client.utils.addMatchPhrase(should, 'title', '王千源', 1, 'ik_smart');
-client.utils.addMatch(should, 'title', '王千源');
-client.utils.addRange(filter, 'issue_time', 951840000, 1548950399);
-client.utils.addTerms(filter, 'type.keyword', ['封面', '文章']);
-client.utils.addTerm(filter, 'type.keyword', '封面');
-client.utils.createTermsAggs('belong_company');
-client.utils.addWildcard(should, 'magazine_keywords.keyword', '*时尚芭莎,总第391期,2016-7B*');
-client.utils.addRegexp(should, 'magazine_keywords.keyword', '*时尚芭莎,总第391期,2016-7B*');
-client.utils.addQueryString(should, ['abstract'], '衬衫 白色', 'AND', 5);
-let dateHistogramAggs = client.utils.createDateHistogramAggs('issue_time_date', 'year', null, 'yyyy');
-
-```
-
-### 构建查询body
-
-```js
-let body = client.utils.createBody(should, filter);
-let body = client.utils.createBody(should, filter, dateHistogramAggs);
-```
-
-### 执行查询的样例
-
-```js
-  let result = await client.search('magazine_article', body, 2, 0);
-  let result = await client.get('magazine_article', '34');
-  let result = await client.update('magazine_article', '25',{download_times:"0"});
-  let result = await client.increase('magazine_article', '23','download_times',10);
-  let result = await client.count('magazine_article',body);
+查询body的基本结构如下,easy-es在此基础上进行查询条件的构建，must、must_not、should的值也可以是object(二级的bool条件)
+```json
+{
+	"query": {
+		"bool": {
+			"must": [],
+			"must_not": [],
+			"should": [],
+			"filter": []
+		}
+	},
+	"sort": [],
+	"aggs": {}
+}
 ```
 

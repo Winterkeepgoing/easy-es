@@ -1,4 +1,5 @@
-out/*
+doc/*
 logs/*
 coverage/*
 node_modules/*
+examples/*
