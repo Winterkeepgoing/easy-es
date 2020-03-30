@@ -7,13 +7,18 @@
   "description": "基于Elasticsearch进行封装，主要用于构建查询条件（body），以及发送请求",
   "main": "index.js",
   "dependencies": {
-    "elasticsearch": "^15.0.0"
+    "elasticsearch": "15.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^7.1.2",
     "@commitlint/config-conventional": "^7.1.2",
     "eslint": "^6.0.1",
-    "husky": "^1.0.0"
+    "husky": "^1.0.0",
+    "mocha": "^4.1.0",
+    "should": "^13.2.1",
+    "sleep": "^6.1.0",
+    "winston": "^3.2.1",
+    "nyc": "^15.0.0"
   },
   "author": "winter",
   "directories": {
