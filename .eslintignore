@@ -1,4 +1,6 @@
-out/*
+doc/*
 logs/*
 coverage/*
 node_modules/*
+examples/*
+.nyc_out/*
