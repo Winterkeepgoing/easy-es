@@ -2,7 +2,8 @@
 
 require('should');
 const sleep = require('sleep');
-const easyES = require('../index');
+const easyES = require('../../index');
+const log = require('../../common/log');
 
 const configs = [
   {host: '127.0.0.1:6800', version: '6.x'},
@@ -11,10 +12,6 @@ const configs = [
 
 configs.forEach(test);
 
-// const client = require('../index')({
-//   node: 'http://192.168.90.139:9200',
-//   version: '6.x',
-// });
 function test(config) {
   const client = new easyES(config.host, config.version);
   describe('lib/easy_es.js', () => {
@@ -30,9 +27,7 @@ function test(config) {
       try {
         isExist = await client.get(type, firstId, source, index);
       } catch (e) {
-        /* eslint no-console: off */
-        console.log('statusCode:', e.statusCode);
-        console.log('message:', e.message);
+        log.info('get firstId message:', e.statusCode, e.message);
       }
       if (!isExist) {
         const initViews = 0;
@@ -93,7 +88,7 @@ function test(config) {
       // 简单的聚合
       const agg = client.utils.createTermsAggs('gender');
       const aggBody = client.utils.createBody(null, null, agg);
-      const aggResult = await client.search(type, aggBody);
+      const aggResult = await client.search(type, aggBody, 0, null, null, index);
 
       aggResult.should.be.Array;
       aggResult.length.should.be.equal(2);
@@ -123,6 +118,10 @@ function test(config) {
       // update
       const updateRes = await client.update(type, insertId, updateDoc, index);
       updateRes.should.equal(true);
+
+      // update 更新的数据和原来一样
+      const updateRes2 = await client.update(type, insertId, updateDoc, index);
+      updateRes2.should.equal(true);
 
       const getUpdateRes = await client.get(type, insertId, null, index);
       getUpdateRes.views.should.equal(updateView);
@@ -168,9 +167,7 @@ function test(config) {
       try {
         isExist = await client.get(type, firstId, source, index);
       } catch (e) {
-        /* eslint no-console: off */
-        console.log('statusCode:', e.statusCode);
-        console.log('message:', e.message);
+        log.info('updateMulti get message:', e.statusCode, e.message);
       }
       if (!isExist) {
         await client.create(type, doc, firstId, index);

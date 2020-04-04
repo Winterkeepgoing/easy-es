@@ -2,7 +2,8 @@
 
 require('should');
 const sleep = require('sleep');
-const easyES = require('../index');
+const easyES = require('../../index');
+const log = require('../../common/log');
 
 // 文件名的v5 v6对应的是对应es版本和实际场景的不同，采用的代码参数写法不同
 // v6的写法，可以支持es的5.x 6.x
@@ -30,9 +31,7 @@ function test(config) {
       try {
         isExist = await client.get(type, firstId, source);
       } catch (e) {
-        /* eslint no-console: off */
-        console.log('statusCode:', e.statusCode);
-        console.log('message:', e.message);
+        log.info('get firstId message:', e.statusCode, e.message);
       }
       if (!isExist) {
         const initViews = 0;
@@ -124,6 +123,10 @@ function test(config) {
       const updateRes = await client.update(type, insertId, updateDoc);
       updateRes.should.equal(true);
 
+      // update 更新的数据和原来一样
+      const updateRes2 = await client.update(type, insertId, updateDoc);
+      updateRes2.should.equal(true);
+
       const getUpdateRes = await client.get(type, insertId);
       getUpdateRes.views.should.equal(updateView);
 
@@ -168,9 +171,7 @@ function test(config) {
       try {
         isExist = await client.get(type, firstId, source);
       } catch (e) {
-        /* eslint no-console: off */
-        console.log('statusCode:', e.statusCode);
-        console.log('message:', e.message);
+        log.info('updateMulti get message:', e.statusCode, e.message);
       }
       if (!isExist) {
         await client.create(type, doc, firstId);
