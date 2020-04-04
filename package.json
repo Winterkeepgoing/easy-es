@@ -7,7 +7,7 @@
   "description": "基于Elasticsearch进行封装，主要用于构建查询条件（body），以及发送请求",
   "main": "index.js",
   "dependencies": {
-    "elasticsearch": "15.0.0"
+    "@elastic/elasticsearch": "7.6.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^7.1.2",
@@ -23,11 +23,19 @@
   "author": "winter",
   "directories": {
     "example": "examples",
-    "lib": "lib"
+    "lib": "lib",
+    "test": "test"
   },
   "repository": {
     "type": "git",
-    "url": "ssh://git@github.com:Winterkeepgoing/easy-es.git"
+    "url": "git+ssh://git@github.com/Winterkeepgoing/easy-es.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Winterkeepgoing/easy-es/issues"
+  },
+  "homepage": "https://github.com/Winterkeepgoing/easy-es#readme",
+  "scripts": {
+    "test": "make test"
   },
   "keywords": [
     "elasticsearch"
