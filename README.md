@@ -5,23 +5,30 @@
 ```shell
 $ npm install easy-es --save
 ```
+### Changes
+* 依赖库切换为`elastic/elasticsearch`
+* 支持elasticsearch`7.x`
+* 改变实例化的方式
+* 对应elasticsearch`5.x和6.x`取消实例化时指定`index`,改用`setIndex`替代
 
 ### Usage
-[API文档请参考](https://easy-es.ibrightfactory.com/) 
+[v3.0.0API文档请参考](https://easy-es.ibrightfactory.com/v3.0.0/) 
+[v2.0.1API文档请参考](https://easy-es.ibrightfactory.com/v2.0.1/)
 
 ### Supported Elasticsearch Versions
-6.x, 6.2, 6.1, 6.0, 5.6, 5.5, 5.4, 5.3, 5.2, 5.1, 5.0
+* `5.x`
+* `6.x`
+* `7.x`
 
 ### Examples
 ```js
-// 6.x
-// 其他版本样例请参考examples路径下的相应文件
+// 更多的样例请参考examples路径下的相应文件
 const easyES = require('easy-es');
-const client = new easyES('user:password@192.168.1.1:9200', '6.x');
+const config = {node: 'http://elastic:changeme@127.0.0.1:9200', version: '7.x'};
+const client = easyES(config);
 
-// -------一个简单的查询-------
+// 构建查询的body
 const should = [], filter = [];
-// 无论什么版本，utils下的方法都是一致的
 client.utils.addTerm(filter, 'gender', 'male');
 client.utils.addRange(filter, 'reward', 300000000, 1500000000);
 client.utils.addMatch(should, 'name', 'Monkey');
@@ -30,20 +37,9 @@ const body = client.utils.createBody(should, filter);
 
 const source = ['name'];
 // 获取前10个检索结果
-const result = await client.search('type', body, 10, 0, source ,'index');
-
-// -------一个简单的聚合-------
-const agg = client.utils.createTermsAggs('gender');
-const body = client.utils.createBody(should, filter, agg);
-const result = await client.search('type', body, 0, 0, null, 'index');
-
-// -------带timeZone的时间聚合-------
-const dateHistogramAggs = client.utils.createDateHistogramAggs('birthday', 'year', 'yyyy', null, null, '+08:00');
-const body = client.utils.createBody(should, filter, dateHistogramAggs);
-
-const result = await client.search('type', body, 0, 0, null, 'index');
-
+const result = await client.search('index', body, 10, 0, source);
 ```
+声明时的config的参数除了[官方的配置](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/client-configuration.html)之外，多了version的参数，支持的值为'5.x', '6.x', '7.x'。
 
 ### Something you need to know
 
