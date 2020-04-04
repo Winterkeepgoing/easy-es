@@ -12,8 +12,8 @@ $ npm install easy-es --save
 * 对应elasticsearch`5.x和6.x`取消实例化时指定`index`,改用`setIndex`替代
 
 ### Usage
-[v3.0.0API文档请参考](https://easy-es.ibrightfactory.com/v3.0.0/) 
-[v2.0.1API文档请参考](https://easy-es.ibrightfactory.com/v2.0.1/)
+* [v3.0.0 文档](https://easy-es.ibrightfactory.com/v3.0.0/) 
+* [v2.0.1 文档](https://easy-es.ibrightfactory.com/v2.0.1/)
 
 ### Supported Elasticsearch Versions
 * `5.x`

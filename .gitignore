@@ -7,6 +7,6 @@ Untitled
 /logs
 coverage
 .nyc_output
-./doc
+/doc
 package-lock.json
 temp
